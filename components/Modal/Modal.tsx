@@ -1,3 +1,4 @@
+"use client";
 import css from "./Modal.module.css";
 import { useEffect } from "react";
 import type {  ReactNode } from "react";
