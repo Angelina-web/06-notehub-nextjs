@@ -1,6 +1,7 @@
 import css from "./App.module.css";
 import { useState } from "react";
-import {fetchNotes} from "@/lib/api";
+import { fetchNotes } from "@/lib/api";
+import type { NotesHttpResponse } from "@/types/note";
 import Pagination from "@/components/Pagination/Pagination";
 import NoteList from "@/components/NoteList/NoteList";
 import NoteForm from "@/components/NoteForm/NoteForm";
@@ -9,18 +10,16 @@ import SearchBox from "@/components/SearchBox/SearchBox";
 import { useQuery, keepPreviousData } from "@tanstack/react-query";
 import { useDebounce } from "use-debounce";
 
-const PER_PAGE = 12;
-
 export default function App() {
   const [query, setQuery] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [debouncedQuery] = useDebounce(query, 500);
 
-  const { data, isLoading, isError, error, isSuccess } = useQuery({
+  const { data, isLoading, isError, error, isSuccess } = useQuery<NotesHttpResponse, Error>({
     queryKey: ["notes", debouncedQuery, currentPage],
     queryFn: () =>
-      fetchNotes(currentPage, PER_PAGE, debouncedQuery || undefined),
+      fetchNotes(currentPage,  debouncedQuery || ''),
     placeholderData: keepPreviousData,
   });
 
@@ -47,7 +46,7 @@ export default function App() {
       </header>
 
       {isLoading && <p>Loading...</p>}
-      {isError && <p>Error: {(error as Error).message}</p>}
+      {isError && <p>Error: {error.message}</p>}
       {isSuccess && data.notes.length > 0 && <NoteList notes={data.notes} />}
       {isSuccess && data.notes.length === 0 && <p>No notes found</p>}
 

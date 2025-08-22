@@ -1,13 +1,8 @@
 import axios from "axios";
-import type { Note } from "@/types/note";
+import type { Note, NotesHttpResponse } from "@/types/note";
 
 const BASE_URL = "https://notehub-public.goit.study/api";
 const myKey = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
-
-interface NotesHttpResponse {
-  notes: Note[];
-  totalPages: number;
-}
 
 export interface CreateNotePayload {
   title: string;
@@ -19,20 +14,16 @@ export const fetchNotes = async (
   page: number,
   query: string
 ): Promise<NotesHttpResponse> => {
-  const params = {
+  const response = await axios.get<NotesHttpResponse>(`${BASE_URL}/notes`, {
     params: {
       search: query,
-      page: page,
+      page,
       perPage: 12,
     },
     headers: {
       Authorization: `Bearer ${myKey}`,
     },
-  };
-  const response = await axios.get<NotesHttpResponse>(
-    "https://notehub-public.goit.study/api/notes",
-    params
-  );
+  });
   return response.data;
 };
 

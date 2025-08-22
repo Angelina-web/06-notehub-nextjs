@@ -13,6 +13,7 @@ export default function Pagination({
   setCurrentPage,
 }: PaginationProps) {
   if (totalPages <= 1) return null;
+
   return (
     <ReactPaginate
       breakLabel="..."

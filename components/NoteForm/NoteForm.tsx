@@ -4,8 +4,8 @@ import * as Yup from "yup";
 import { useId } from "react";
 import type { FormikHelpers } from "formik";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createNote } from '@/lib/api';
-import type { CreateNotePayload } from '@/lib/api';
+import { createNote } from "@/lib/api";
+import type { CreateNotePayload } from "@/lib/api";
 
 interface NoteFormProps {
   onClose: () => void;
@@ -40,6 +40,9 @@ export default function NoteForm({ onClose }: NoteFormProps) {
       queryClient.invalidateQueries({ queryKey: ["notes"] });
       onClose();
     },
+    onError: (error) => {
+      console.error("Failed to create note", error.message);
+    },
   });
 
   const handleSubmit = (
@@ -64,8 +67,14 @@ export default function NoteForm({ onClose }: NoteFormProps) {
             name="title"
             id={`${fieldId}-title`}
             className={css.input}
+            autoFocus
           />
-          <ErrorMessage name="title" component="span" className={css.error} />
+          <ErrorMessage
+            name="title"
+            component="span"
+            className={css.error}
+            aria-live="polite"
+          />
         </div>
 
         <div className={css.formGroup}>

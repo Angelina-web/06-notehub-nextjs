@@ -10,10 +10,13 @@ interface NoteListProps {
 export default function NoteList({ notes }: NoteListProps) {
   const queryClient = useQueryClient();
 
-  const { mutate } = useMutation({
-    mutationFn: (id: string) => deleteNote(id),
+  const { mutate } = useMutation<Note, Error, string>({
+    mutationFn: (id) => deleteNote(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["notes"] });
+    },
+    onError: (error) => {
+      console.error("Failed to delete note:", error.message);
     },
   });
 
@@ -30,7 +33,7 @@ export default function NoteList({ notes }: NoteListProps) {
             <span className={css.tag}>{note.tag}</span>
             <button
               className={css.button}
-              onClick={() => mutate(String(note.id))}
+              onClick={() => mutate(note.id)}
             >
               Delete
             </button>
