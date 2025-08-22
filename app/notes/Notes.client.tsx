@@ -1,4 +1,4 @@
-import css from "./App.module.css";
+import css from "./NotesPage.module.css";
 import { useState } from "react";
 import { fetchNotes } from "@/lib/api";
 import type { NotesHttpResponse } from "@/types/note";
