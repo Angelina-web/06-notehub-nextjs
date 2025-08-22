@@ -1,3 +1,4 @@
+"use client";
 import css from "./NotesPage.module.css";
 import { useState } from "react";
 import { fetchNotes } from "@/lib/api";
