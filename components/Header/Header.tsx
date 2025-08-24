@@ -14,14 +14,14 @@ const Header = () => {
       <nav aria-label="Main Navigation">
         <ul className={css.navigation}>
           <li>
-            <Link href="/" aria-current={pathname === "/" ? "page" : undefined}>
+            <Link href="/" aria-current={pathname === "/notes" ? "page" : undefined}>
               Home
             </Link>
           </li>
           <li>
             <Link
               href="/notes"
-              aria-current={pathname === "/" ? "page" : undefined}
+              aria-current={pathname === "/notes" ? "page" : undefined}
             >
               Notes
             </Link>

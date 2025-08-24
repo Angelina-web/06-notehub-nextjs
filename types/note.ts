@@ -6,7 +6,3 @@ export interface Note {
     updatedAt: string;
     tag: 'Todo' | 'Work' | 'Personal' | 'Meeting' | 'Shopping';
 }
-export interface NotesHttpResponse {
-  notes: Note[];
-  totalPages: number;
-}
