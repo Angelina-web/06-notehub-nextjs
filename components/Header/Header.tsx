@@ -14,7 +14,7 @@ const Header = () => {
       <nav aria-label="Main Navigation">
         <ul className={css.navigation}>
           <li>
-            <Link href="/" aria-current={pathname === "/notes" ? "page" : undefined}>
+            <Link href="/" aria-current={pathname === "/" ? "page" : undefined}>
               Home
             </Link>
           </li>
